@@ -1,37 +1,46 @@
 import React from "react";
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import IconWithBadge from '../navigator/components/IconWithBadge';
 
-import WelcomeScreen from '../screens/onboarding/welcome/WelcomeScreen';
+import PostsScreen from "../screens/main/posts/PostsScreen";
+import SearchScreen from "../screens/main/search/SearchScreen";
+import UsersScreen from "../screens/main/users/UsersScreen";
 
 
-const HomeIconWithBadge = props => {
-  // You should pass down the badgeCount in some other ways like context, redux, mobx or event emitters.
-  return <IconWithBadge {...props} badgeCount={2} />;
-};
+// const HomeIconWithBadge = props => {
+//   // You should pass down the badgeCount in some other ways like context, redux, mobx or event emitters.
+//   return <IconWithBadge {...props} badgeCount={2} />;
+// };
 
 const getTabBarIcon = (navigation, focused, tintColor) => {
   const { routeName } = navigation.state;
-  let IconComponent = MaterialCommunityIcons;
+  let IconComponent = Ionicons;
   let iconName;
-  if (routeName === 'Home') {
-    iconName = `home`;
-    // We want to add badges to home tab icon
-    IconComponent = HomeIconWithBadge;
-  } else if (routeName === 'Settings') {
-    iconName = `ios-options${focused ? '' : '-outline'}`;
-  }
 
-  // You can return any component that you like here!
-  return <IconComponent name='home' size={25} color={tintColor} />;
+  switch (routeName) {
+    case 'Posts':
+      iconName = `md-home`;
+      break;
+    case 'Search':
+      iconName = `md-search`;
+      break;
+    case 'Users':
+      iconName = `md-people`;
+      break;
+    default:
+      break;
+  }
+  return <IconComponent name={iconName} size={25} color={tintColor} />;
 };
 
 
 const Tabs = createBottomTabNavigator(
   {
-    Home: { screen: WelcomeScreen }
+    Posts: { screen: PostsScreen },
+    Search: { screen: SearchScreen },
+    Users: { screen: UsersScreen },
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
